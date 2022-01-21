@@ -2,6 +2,9 @@ import Products from './data/Products.json';
 import React from 'react';
 import styled from 'styled-components';
 import Filters from './components/Filters/Filters.js';
+import Produto from "./components/Produto";
+import Carrinho2 from "./components/Carrinho2";
+// import CardProduto from "./components/CardProduto";
 
 const Page = styled.div`
   display: flex;
@@ -86,11 +89,58 @@ class App extends React.Component{
           changeMaxPriceValue={this.changeMaxPriceValue}
         />
         <ProductPage>
+            <Produto
+          // addProduto={() => {
+          //   this.addProduto();
+          // }}
+          ></Produto>
           {produto()}
         </ProductPage>
+        <Carrinho2/>   
       </Page>  
     );
   };
 };
-
 export default App;
+
+// state = {
+//   carrinho: ["1,2,3,4,5"],
+//   preis: [],
+//   item: [],
+//   qtd: [],
+//   products: [
+//     {
+//       id: Date.now() + 1,
+//       nomeProduto1: "Aerolito",
+//       preco: 199.99,
+//     },
+//     {
+//       id: Date.now() + 2,
+//       nomeProduto1: "Camiseta Astronauta",
+//       preco: 29.99,
+//     },
+//     {
+//       id: Date.now() + 4,
+//       nomeProduto1: "Camiseta Planetas",
+//       preco: 29.99,
+//     },
+//     {
+//       id: Date.now() + 5,
+//       nomeProduto1: "Telescópio",
+//       preco: 99.99,
+//     },
+//   ],
+// };
+// // onChangeProduto=(event)=>{
+// //   this.setState({carrinho:event.target.value})
+// // }
+//  addProduto = () => {
+//   console.log("to rodando");
+//   const novoPro = {
+//     id: Date.now(),
+//     nomeProduto1: this.state.carrinho.nomeProduto1,
+//     preco: this.state.carrinho.preco,
+//   };
+//   const novaPro = [...this.state.products, novoPro];
+//   this.setState({ products: novaPro });
+// };
