@@ -22,7 +22,8 @@
         "name": "Foguete da Milo 11",
         "value": 100.0,
         "imageUrl": "https://picsum.photos/200/203"
-    },{
+    },
+    {
         "id": 5,
         "name": "Fote do Apollo 11",
         "value": 10000.0,
