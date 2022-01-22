@@ -2,9 +2,6 @@ import Products from './data/Products.json';
 import React from 'react';
 import styled from 'styled-components';
 import Filters from './components/Filters/Filters.js';
-import Produto from "./components/Produto";
-import Carrinho2 from "./components/Carrinho2";
-// import CardProduto from "./components/CardProduto";
 
 const Page = styled.div`
   display: flex;
@@ -33,13 +30,24 @@ const Card = styled.div`
   text-align: center;
   width: fit-content;
 `;
+const CardProdutoTop = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background-color: lightcyan;
+  width: 800px;
+  height: 50px;
+`;
 
 class App extends React.Component{
 
   state = {
     keyWordValue: '',
     minPriceValue: '',
-    maxPriceValue: ''
+    maxPriceValue: '',
+    crescente: true,
+    decrescente: false
   }
 
   changeKeyWordValue = (event) => {
@@ -51,10 +59,24 @@ class App extends React.Component{
   changeMaxPriceValue = (event) => {
     this.setState({maxPriceValue: event.target.value})
   };
+  sortPrecoDec = () => {
+    this.setState({crescente: false, decrescente: true});
+  };
+  sortPrecoAsc = () => {
+    this.setState({crescente: true, decrescente: false});
+  };
 
   render() {
 
     const produto = () => Products
+    .sort((produtoAtual, proximoProduto) => {
+      if (this.state.crescente) {
+        return produtoAtual.value - proximoProduto.value;
+      }
+      else {
+        return proximoProduto.value - produtoAtual.value;
+      }
+    })
     .filter((produto) => {
       return produto.name.toLowerCase().includes(this.state.keyWordValue.toLowerCase());
     })
@@ -74,6 +96,7 @@ class App extends React.Component{
           <h4>{produto.name}</h4>
           <img src={produto.imageUrl} alt="" />
           <p>{produto.value}</p>
+          <button>Adicionar ao carrinho</button>
         </Card>
       );
     });
@@ -88,59 +111,18 @@ class App extends React.Component{
           changeMinPriceValue={this.changeMinPriceValue}
           changeMaxPriceValue={this.changeMaxPriceValue}
         />
+        <CardProdutoTop>
+              <p>Número de produtos: {Products.length}</p>
+              <div>
+                <button onClick={this.sortPrecoDec}>Ordem Decrescente</button>
+                <button onClick={this.sortPrecoAsc}>Ordem Crescente</button>
+              </div>
+        </CardProdutoTop>
         <ProductPage>
-            <Produto
-          // addProduto={() => {
-          //   this.addProduto();
-          // }}
-          ></Produto>
-          {produto()}
+            {produto()}
         </ProductPage>
-        <Carrinho2/>   
       </Page>  
     );
   };
 };
 export default App;
-
-// state = {
-//   carrinho: ["1,2,3,4,5"],
-//   preis: [],
-//   item: [],
-//   qtd: [],
-//   products: [
-//     {
-//       id: Date.now() + 1,
-//       nomeProduto1: "Aerolito",
-//       preco: 199.99,
-//     },
-//     {
-//       id: Date.now() + 2,
-//       nomeProduto1: "Camiseta Astronauta",
-//       preco: 29.99,
-//     },
-//     {
-//       id: Date.now() + 4,
-//       nomeProduto1: "Camiseta Planetas",
-//       preco: 29.99,
-//     },
-//     {
-//       id: Date.now() + 5,
-//       nomeProduto1: "Telescópio",
-//       preco: 99.99,
-//     },
-//   ],
-// };
-// // onChangeProduto=(event)=>{
-// //   this.setState({carrinho:event.target.value})
-// // }
-//  addProduto = () => {
-//   console.log("to rodando");
-//   const novoPro = {
-//     id: Date.now(),
-//     nomeProduto1: this.state.carrinho.nomeProduto1,
-//     preco: this.state.carrinho.preco,
-//   };
-//   const novaPro = [...this.state.products, novoPro];
-//   this.setState({ products: novaPro });
-// };
