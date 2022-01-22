@@ -1,6 +1,6 @@
-import { Component } from "react";
+import React from "react";
 
-class Filters extends Component {
+class Filters extends React.Component {
     render() {
         return (
         <form>
