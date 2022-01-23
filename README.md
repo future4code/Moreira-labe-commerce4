@@ -4,9 +4,9 @@
 - Filtros 
 - Ordenação crescente e decrescente
 - parte do layout funciona 
+- botão adicionar ao carrinho
 
 ###O que não funciona:
-- botão adicionar ao carrinho
 - o carrinho
 - o design da página
 
