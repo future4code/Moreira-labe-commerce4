@@ -2,6 +2,8 @@ import Products from './data/Products.json';
 import React from 'react';
 import styled from 'styled-components';
 import Filters from './components/Filters/Filters.js';
+import ShoppingCart from "./components/ShoppingChart/ShoppingCart";     //eliel 23 jan
+import ShoppingCartItem from './components/ShoppingChart/ShoppingCartItem';
 
 const Page = styled.div`
   display: flex;
@@ -43,11 +45,22 @@ const CardProdutoTop = styled.div`
 class App extends React.Component{
 
   state = {
+    produtosCarrinho: [],
+    prodAddCarrinho: [],
     keyWordValue: '',
     minPriceValue: '',
     maxPriceValue: '',
     crescente: true,
-    decrescente: false
+    decrescente: false,
+    productsInCart: [         //eliel 23 jan
+      {
+        id: Date.now() + 1,
+        nomeProduto1: "Aerolito",
+        preco: 199.99,
+        quantity: 1
+      },
+    ]
+
   }
 
   changeKeyWordValue = (event) => {
@@ -65,6 +78,66 @@ class App extends React.Component{
   sortPrecoAsc = () => {
     this.setState({crescente: true, decrescente: false});
   };
+
+
+  onAdd = (produto) => {
+    const auxProduto = [produto];
+    // let auxCarrinho =
+     auxProduto.map((item) => {
+      // não tem como dar MAP em objeto, apenas em ARRAY
+      let productsCart = this.state.produtosCarrinho.push(item);
+      this.setState({
+        ...this.state.produtosCarrinho,
+        productsCart, //PRESTAR ATENÇÃO NA COPIA
+      });
+      return Products.id === item.id ? this.state.produtosCarrinho : [];
+    });
+    let prodAddCarrinho;
+      if (prodAddCarrinho) {
+        const newProdAddCarrinho = this.state.produtosCarrinho.map(
+          (product) => {
+            if (produto.id === product.id) {
+                 let quantidade = produto.quantity + 1;
+              return {
+                ...product,
+                quantidade,
+              };
+            }
+            return product;
+          }
+        );
+        this.setState({ prodAddCarrinho: newProdAddCarrinho });
+      } else {
+        const newProdNoCarriho = Products.find(
+          (product) => produto.id === product.id
+        );
+        const produtoParaAdd = [
+          ...this.state.prodAddCarrinho,
+          { ...newProdNoCarriho, quantity: 1 },
+        ];
+        this.setState({ prodAddCarrinho: produtoParaAdd });
+      }
+    }
+
+
+    onRemoveProductFromCart = (productId) => { //eliel 22 jan
+      const newProductsInCard = this.state.productsInCart.map((product)=>{
+        if (product.id === productId){
+          return {
+            ...product, //clonando itens e alterando a quantidade??
+            quantity: product.quantity - 1
+          }
+        }
+        return product
+      }).filter((product) => product.quantity > 0)
+         
+      
+      this.setState({productsInCart: newProductsInCard})
+  
+  
+    }
+
+
 
   render() {
 
@@ -96,7 +169,7 @@ class App extends React.Component{
           <h4>{produto.name}</h4>
           <img src={produto.imageUrl} alt="" />
           <p>{produto.value}</p>
-          <button>Adicionar ao carrinho</button>
+          <button onClick={() => this.onAdd(produto)}>Adicionar ao carrinho</button>
         </Card>
       );
     });
@@ -121,6 +194,23 @@ class App extends React.Component{
         <ProductPage>
             {produto()}
         </ProductPage>
+        {this.state.produtosCarrinho.map((item) => {
+          return (
+            <div key={item.id}>
+              {/*fazer +1 no id para mudar quando click*/}
+              <li>Produto: {item.name}</li>
+              {/* <img src={item.imageUrl} alt={item.name} /> */}
+              <p>ValorR$: {item.value}</p>
+              <p>Qtd.:{item.quantity}</p>
+            </div>
+          );
+        })}
+        
+        {/* <ShoppingCart>                                  ao descomentar quebra o código :(
+          productsInCart = {this.state.productsInCart}
+          onRemoveProductFromCart = {this.onRemoveProductFromCart}
+        </ShoppingCart> */}
+        
       </Page>  
     );
   };
