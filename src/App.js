@@ -47,7 +47,8 @@ class App extends React.Component{
     minPriceValue: '',
     maxPriceValue: '',
     crescente: true,
-    decrescente: false
+    decrescente: false,
+    produtosCarrinho: []
   }
 
   changeKeyWordValue = (event) => {
@@ -64,6 +65,34 @@ class App extends React.Component{
   };
   sortPrecoAsc = () => {
     this.setState({crescente: true, decrescente: false});
+  };
+    onAdd = (produtoId) => {
+   
+    const productsInCart = this.state.produtosCarrinho.find(
+      (item) => produtoId === item.id
+    );
+
+    if (productsInCart) {
+      const newProductsInCart = this.state.produtosCarrinho.map((item) => {
+        if (produtoId === item.id) {
+          return {
+            ...item,
+            quantity: item.quantity + 1,
+          };
+        }
+        return item;
+      });
+      this.setState({ produtosCarrinho: newProductsInCart });
+    } else {
+      const productToAdd = Products.find(
+        (item) => produtoId === item.id
+      );
+      const newProductsInCart = [
+        ...this.state.produtosCarrinho,
+        { ...productToAdd, quantity: 1 },
+      ];
+      this.setState({ produtosCarrinho: newProductsInCart });
+    }
   };
 
   render() {
@@ -90,13 +119,13 @@ class App extends React.Component{
         return true;
       }
     })
-    .map((produto) => {
+    .map((produto,index) => {
       return (
-        <Card>
+        <Card key={index}>
           <h4>{produto.name}</h4>
           <img src={produto.imageUrl} alt="" />
           <p>{produto.value}</p>
-          <button>Adicionar ao carrinho</button>
+          <button onClick={() => this.onAdd(produto.id)}>Adicionar ao carrinho</button>
         </Card>
       );
     });
@@ -121,6 +150,20 @@ class App extends React.Component{
         <ProductPage>
             {produto()}
         </ProductPage>
+              {this.state.produtosCarrinho.map((item, index) => {
+          return (
+            <div key={item.id}>
+              {/*fazer +1 no id para mudar quando click*/}
+
+              <li>Produto: {item.name}</li>
+
+              {/* <img src={item.imageUrl} alt={item.name} /> */}
+              <p>ValorR$: {item.value}</p>
+
+              <p>Qtd.:{item.quantity}</p>
+            </div>
+          );
+        })}
       </Page>  
     );
   };
