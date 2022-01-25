@@ -14,4 +14,4 @@
 - nosso-lab-e-commerce.surge.sh
 
 ###Prints:
-![Captura de Tela 2022-01-21 às 17 51 47](https://user-images.githubusercontent.com/91904086/150598580-bd828423-7c44-4bc4-bef4-5ae15dc15ec3.png)
+```[![Sem-t-tulo.jpg](https://i.postimg.cc/xC8zG0jj/Sem-t-tulo.jpg)](https://postimg.cc/qhfq4HCW)```
