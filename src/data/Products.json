@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "name": "Foguete da",
+        "value": 0,
+        "imageUrl": "https://picsum.photos/200/200"
+    },
+    {
+        "id": 2,
+        "name": "Fogu Missão Apollo 11",
+        "value": 100.0,
+        "imageUrl": "https://picsum.photos/200/201"
+    },
+    {
+        "id": 3,
+        "name": "Foguete da1",
+        "value": 10.0,
+        "imageUrl": "https://picsum.photos/200/202"
+    },
+    {
+        "id": 4,
+        "name": "Foguete da Milo 11",
+        "value": 100.0,
+        "imageUrl": "https://picsum.photos/200/203"
+    },
+    {
+        "id": 5,
+        "name": "Fote do Apollo 11",
+        "value": 10000.0,
+        "imageUrl": "https://picsum.photos/200/204"
+    }
+]
